@@ -13,6 +13,7 @@ from django.shortcuts import render
 from django.conf import settings
 from django.contrib.auth import login
 from django.utils.translation import ugettext_lazy as _, ugettext
+from django.utils.http import is_safe_url
 from django.http import HttpResponseRedirect
 from django.utils.http import urlencode
 from django.utils.datastructures import SortedDict
