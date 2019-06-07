@@ -6,6 +6,7 @@ from django.template import RequestContext
 from django.utils.http import base36_to_int
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
+from django.utils.http import is_safe_url
 from django.views.generic.base import TemplateResponseMixin, View
 from django.views.generic.edit import FormView
 from django.contrib import messages
@@ -61,10 +62,11 @@ class LoginView(RedirectAuthenticatedUserMixin, FormView):
 
     def get_success_url(self):
         # Explicitly passed ?next= URL takes precedence
-        ret = (get_next_redirect_url(self.request, 
-                                     self.redirect_field_name)
-               or self.success_url)
-        return ret
+        request_url = get_next_redirect_url(self.request, self.redirect_field_name)
+        if request_url and is_safe_url(request_url):
+            return (request_url)
+        else:
+            return (self.success_url)
 
     def get_context_data(self, **kwargs):
         ret = super(LoginView, self).get_context_data(**kwargs)
