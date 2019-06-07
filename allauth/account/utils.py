@@ -37,7 +37,10 @@ def get_next_redirect_url(request, redirect_field_name="next"):
     """
     redirect_to = request.REQUEST.get(redirect_field_name)
     # light security check -- make sure redirect_to isn't garabage.
-    if not redirect_to or "://" in redirect_to or " " in redirect_to:
+    print 'get_next_redirect_url'
+    print redirect_to
+
+    if not is_safe_url(redirect_to) or not redirect_to or "://" in redirect_to or " " in redirect_to:
         redirect_to = None
     return redirect_to
 
