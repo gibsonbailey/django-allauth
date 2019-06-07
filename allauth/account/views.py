@@ -64,6 +64,8 @@ class LoginView(RedirectAuthenticatedUserMixin, FormView):
         # Explicitly passed ?next= URL takes precedence
         request_url = get_next_redirect_url(self.request, self.redirect_field_name)
         if request_url and is_safe_url(request_url):
+            print 'request url is safe!'
+            print request_url
             return (request_url)
         else:
             return (self.success_url)
