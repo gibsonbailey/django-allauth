@@ -68,6 +68,8 @@ class LoginView(RedirectAuthenticatedUserMixin, FormView):
             print request_url
             return (request_url)
         else:
+            print 'request url is not safe'
+            print self.success_url
             return (self.success_url)
 
     def get_context_data(self, **kwargs):
